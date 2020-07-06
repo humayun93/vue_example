@@ -4,7 +4,9 @@
     <b-container classs="bv-example-row">
       <b-row>
         <b-col sm="6" offset="3" >
-          <QuestionBox></QuestionBox>
+          <QuestionBox
+           :currentQuestion="questions[index]"
+          />
         </b-col>
       </b-row>
     </b-container>
@@ -23,7 +25,8 @@ export default {
   },
   data() {
     return {
-      questitions: []
+      questions: [],
+      index: 0
     }
   }
   ,
@@ -34,7 +37,7 @@ export default {
     .then((response) => {
       return response.json()
     }).then((jsonData) => {
-      this.questitions = jsonData.results
+      this.questions = jsonData.results
     })
   }
 }
