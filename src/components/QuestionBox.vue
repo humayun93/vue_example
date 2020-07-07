@@ -9,13 +9,7 @@
 
       <b-list-group>
         <b-list-group-item v-for="(answer ,index) in shuffledAnswers" :key="index" @click="selectAnswer(index)" 
-        :class="[
-          !isSubmitted && selectedIndex === index ? 'selected-answer' : ''
-          ,
-          isSubmitted && selectedIndex === index && isCorrect ? 'correct' : ''
-          ,
-          isSubmitted && selectedIndex === index && !isCorrect ? 'incorrect' : ''
-          ]" >
+        :class="answerClass(index)" >
         {{index}}: {{answer}}
         </b-list-group-item>
       </b-list-group>
@@ -44,6 +38,16 @@ export default {
     increment: Function
   },
   methods:{
+    answerClass(index){
+      if(!this.isSubmitted && this.selectedIndex === index) 
+        return 'selected-answer'
+      else if(this.isSubmitted && this.selectedIndex === index && this.isCorrect)
+        return 'correct'
+      else if(this.isSubmitted && this.selectedIndex === index && !this.isCorrect)
+        return 'incorrect'
+      
+      return ''
+    },
     submitAnswer() {
       if (this.currentQuestion.correct_answer === this.shuffledAnswers[this.selectedIndex]){
         this.isCorrect = true
@@ -66,6 +70,7 @@ export default {
         this.selectedIndex = null
         this.shuffleAnswers()
         this.isSubmitted = false
+        this.isCorrect = null
       }
     }
   },
